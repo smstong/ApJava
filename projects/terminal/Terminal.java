@@ -1,8 +1,5 @@
 import java.io.File;
-import java.io.FileWriter;
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
+import java.util.*;
 
 class Terminal {
 	private String fgColor;
@@ -82,8 +79,20 @@ class Terminal {
 		System.out.print("\033[0m");
 	}
 
-	public void moveCursor(int r, int c){
+	public void moveTo(int r, int c){
 		System.out.print(String.format("\033[%d;%dH", r, c));
+	}
+	public void moveUp(int n){
+		System.out.print(String.format("\033[%dA", n));
+	}
+	public void moveDown(int n){
+		System.out.print(String.format("\033[%dB", n));
+	}
+	public void moveForward(int n){
+		System.out.print(String.format("\033[%dC", n));
+	}
+	public void moveBack(int n){
+		System.out.print(String.format("\033[%dD", n));
 	}
 
 	public void print(Object... args){
@@ -91,25 +100,4 @@ class Terminal {
 			System.out.print(arg);
 		}
 	}
-
-	public void showImage(String filename) throws Exception{
-		File file = new File(filename);
-		BufferedImage img = ImageIO.read(file);
-		int width = img.getWidth();
-		int height = img.getHeight();
-		print(width, ",", height);
-		for(int r=0; r<height; r++){
-			for(int c=0; c<width; c++){
-				int pixel = img.getRGB(c, r);
-				Color color = new Color(pixel, true);
-				int red = color.getRed();
-				int green = color.getGreen();
-				int blue = color.getBlue();
-				moveCursor(r, c);
-				setBgColor(red, green, blue);
-				print(" ");
-			}
-		}
-	}
-
 }

@@ -1,6 +1,3 @@
-import java.io.File;
-import java.util.*;
-
 class Terminal {
 	private String fgColor;
 	private String bgColor;
